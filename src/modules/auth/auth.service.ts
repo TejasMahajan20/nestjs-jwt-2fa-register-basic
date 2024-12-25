@@ -226,6 +226,7 @@ export class AuthService {
         const isNewUser = !userEntity.isEmailVerified;
         if (isNewUser) {
             await this.userService.update({ uuid: userEntity.uuid }, { isEmailVerified: true });
+            return new HttpResponseDto(AuthMessages.Success.EmailVerified);
         }
 
         // If user raised an request to forget; prompt user to reset password
@@ -245,7 +246,7 @@ export class AuthService {
         };;
 
         return new HttpResponseDto(
-            isNewUser ? AuthMessages.Success.EmailVerified : OtpMessages.Success.OtpVerified,
+            OtpMessages.Success.OtpVerified,
             responseData
         );
     }
